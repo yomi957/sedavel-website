@@ -24,6 +24,10 @@ export type Dictionary = {
   tagline: string;
   nav: {
     features: string;
+    solutions: string;
+    referral: string;
+    help: string;
+    blog: string;
     pricing: string;
     download: string;
     contact: string;
@@ -100,6 +104,8 @@ export type Dictionary = {
     back: string;
   };
   conceptual: string;
+  preview: { label: string; title: string; note: string; featureNote: string };
+  solutions: { eyebrow: string; title: string; subtitle: string; items: FeatureItem[] };
 };
 
 export const PLACEHOLDER_SIGNUP = "#placeholder-signup";
@@ -111,6 +117,10 @@ export const dictionaries = {
     tagline: "SCRM for cross-border teams",
     nav: {
       features: "Features",
+      solutions: "Solutions",
+      referral: "Referral Center",
+      help: "Help Center",
+      blog: "Blog",
       pricing: "Pricing",
       download: "Download",
       contact: "Contact",
@@ -120,51 +130,31 @@ export const dictionaries = {
       closeMenu: "Close menu",
     },
     hero: {
-      eyebrow: "Customer communication for cross-border commerce",
+      eyebrow: "One platform for global customer relationships",
       title: "One Workspace. Every Conversation.",
       subtitle:
-        "Manage multiple accounts, communicate across languages, and simplify customer communication with Sedavel.",
+        "Manage customer conversations across channels and languages, all from one workspace.",
       cta: "Get Started Free",
       ctaNote: "Placeholder link — signup URL coming soon",
-      secondary: "View features",
+      secondary: "Explore Features",
     },
     features: {
-      eyebrow: "Core Features",
-      title: "Built for high-volume customer conversations",
-      subtitle:
-        "Sedavel helps cross-border sellers and foreign-trade teams keep accounts, languages, and replies in one workspace.",
+      eyebrow: "Connected by design",
+      title: "Less switching. More meaningful conversations.",
+      subtitle: "Translation, communication and customer context, brought together for teams working across borders.",
       items: [
-        {
-          title: "Multi-Account Management",
-          body: "Bring multiple customer-communication accounts into a single workspace so your team can switch context without losing the thread.",
-        },
-        {
-          title: "Real-Time Translation",
-          body: "Translate incoming and outgoing messages as you work, so language differences slow the conversation less.",
-        },
-        {
-          title: "AI Quick Replies",
-          badge: "Coming Soon",
-          body: "AI-assisted greetings and smart replies are in development. This capability is not generally available yet.",
-        },
+        { title: "Smart Multilingual Translation", body: "Reduce language barriers with real-time translation, so your team can focus on the conversation." },
+        { title: "AI Copilot", badge: "Coming Soon", body: "AI-assisted greetings and smart replies are in development. This capability is not available yet." },
+        { title: "Unified Messaging", body: "A shared workspace direction for multi-account, cross-channel communication. Available channel coverage will be confirmed in the product." },
+        { title: "Customer Management", body: "Keep customer relationships at the center of your workflow. Specific customer management capabilities will be confirmed in the product." },
       ],
     },
     benefits: {
-      eyebrow: "Benefits",
-      title: "Communicate faster, with fewer moving parts",
+      eyebrow: "A clearer way to work", title: "Built around your conversations",
       items: [
-        {
-          title: "Raise communication efficiency",
-          body: "Keep conversations, accounts, and follow-ups in one place so your team spends less time switching tools.",
-        },
-        {
-          title: "Lower the language barrier",
-          body: "Use real-time translation to understand customers and reply clearly across languages.",
-        },
-        {
-          title: "Simplify multi-account work",
-          body: "Operate several accounts from one workspace instead of juggling separate inboxes.",
-        },
+        { title: "Simplified Communication", body: "Spend less time moving between tools and more time understanding your customers." },
+        { title: "Cross-Language Collaboration", body: "Bring clarity to international conversations with real-time translation." },
+        { title: "Centralized Workflow", body: "Bring multi-account work into one workspace and keep your team focused." },
       ],
     },
     pricing: {
@@ -274,67 +264,57 @@ export const dictionaries = {
         "This is a placeholder legal page. Official policy text will be published here before public launch.",
       back: "Back to home",
     },
-    conceptual: "Conceptual illustration — not a product screenshot",
+    conceptual: "Product imagery pending",
+    preview: { label: "THE SEDAVEL WORKSPACE", title: "Your product workspace, here.", note: "Awaiting an official product screenshot. This is an image placeholder, not a software interface.", featureNote: "Official feature visual pending" },
+    solutions: { eyebrow: "Solutions", title: "Global business. A shared need to connect.", subtitle: "For cross-border sellers, international trade, social media operators and teams expanding overseas.", items: [
+      { title: "Cross-Border E-commerce", body: "For marketplace and independent-store teams handling multilingual product questions and customer conversations." },
+      { title: "B2B International Trade", body: "For international sales teams communicating about requirements, quotations and ongoing business relationships." },
+      { title: "Social Commerce & DTC Brands", body: "For overseas social media and direct-to-consumer teams building customer relationships across languages." },
+    ] },
   },
   zh: {
     brand: "Sedavel",
     tagline: "面向跨境团队的 SCRM",
     nav: {
       features: "功能",
+      solutions: "解决方案",
+      referral: "邀请中心",
+      help: "帮助中心",
+      blog: "博客",
       pricing: "价格",
       download: "下载",
-      contact: "联系",
+      contact: "联系我们",
       getStarted: "免费开始",
       language: "语言",
       openMenu: "打开菜单",
       closeMenu: "关闭菜单",
     },
     hero: {
-      eyebrow: "面向跨境电商与外贸的客户沟通管理",
+      eyebrow: "一站式多语言沟通与客户管理平台",
       title: "One Workspace. Every Conversation.",
       subtitle:
-        "通过 Sedavel 管理多个账号、跨语言沟通，并简化客户沟通流程。",
+        "在同一工作区管理跨渠道、跨语言的客户对话，让全球业务沟通更简单。",
       cta: "免费开始",
       ctaNote: "占位链接 — 注册地址即将公布",
-      secondary: "查看功能",
+      secondary: "探索功能",
     },
     features: {
-      eyebrow: "核心功能",
-      title: "为高频客户沟通而设计",
-      subtitle:
-        "Sedavel 帮助跨境电商卖家和外贸企业，在同一工作区中管理账号、语言与回复。",
+      eyebrow: "四大核心能力",
+      title: "减少工具切换，让每次沟通更有价值。",
+      subtitle: "围绕翻译、沟通与客户关系，连接跨境业务的日常工作。",
       items: [
-        {
-          title: "多账号管理",
-          body: "将多个客户沟通账号集中到同一工作区，减少来回切换，避免对话上下文丢失。",
-        },
-        {
-          title: "实时翻译",
-          body: "在沟通过程中实时翻译收发消息，降低语言差异对回复效率的影响。",
-        },
-        {
-          title: "AI 快捷问候与智能回复",
-          badge: "即将推出",
-          body: "AI 快捷问候与智能回复仍在开发中，目前尚未正式上线。",
-        },
+        { title: "智能多语言翻译", body: "借助实时翻译降低语言障碍，让团队更专注于客户对话本身。" },
+        { title: "AI 助手 Copilot", badge: "即将推出", body: "AI 快捷问候与智能回复正在开发中，目前尚未正式上线。" },
+        { title: "多渠道消息聚合", body: "以统一工作区承载多账号与跨渠道沟通。具体支持渠道以产品正式说明为准。" },
+        { title: "客户管理", body: "围绕客户关系组织日常沟通与工作流程。具体客户管理能力以产品正式说明为准。" },
       ],
     },
     benefits: {
-      eyebrow: "产品价值",
-      title: "提升沟通效率，减少工具切换",
+      eyebrow: "品牌优势", title: "围绕客户对话，建立更清晰的工作方式",
       items: [
-        {
-          title: "提升沟通效率",
-          body: "将对话、账号与跟进集中在一处，减少在多个工具间来回切换的时间。",
-        },
-        {
-          title: "降低语言障碍",
-          body: "借助实时翻译理解客户诉求，并用客户使用的语言更清晰地回复。",
-        },
-        {
-          title: "简化多账号管理",
-          body: "在同一工作区操作多个账号，而不必分别维护多个收件箱。",
-        },
+        { title: "简化沟通", body: "减少在不同工具之间切换，把更多时间留给理解客户与回应需求。" },
+        { title: "跨语言协作", body: "通过实时翻译，让跨语言客户沟通更清晰，让国际业务协作更顺畅。" },
+        { title: "集中工作流程", body: "将多账号工作集中到一个工作区，让团队专注于当前对话。" },
       ],
     },
     pricing: {
@@ -419,7 +399,7 @@ export const dictionaries = {
       product: "产品",
       company: "公司",
       legal: "法律信息",
-      contact: "联系",
+      contact: "联系我们",
       privacy: "隐私政策",
       terms: "服务条款",
       rights: "保留所有权利。",
@@ -431,6 +411,12 @@ export const dictionaries = {
       placeholder: "这是法律信息占位页面。正式文本将在公开发布前更新于此。",
       back: "返回首页",
     },
-    conceptual: "概念示意，并非产品截图",
+    conceptual: "等待正式产品素材",
+    preview: { label: "SEDAVEL 产品工作区", title: "在这里，直观了解产品。", note: "等待正式产品截图。此处为图片占位区域，并非软件界面。", featureNote: "等待正式功能展示素材" },
+    solutions: { eyebrow: "客户应用场景", title: "不同的全球业务，共同的沟通需求。", subtitle: "服务跨境卖家、国际贸易、海外社媒运营及出海业务团队。", items: [
+      { title: "跨境电商与独立站", body: "面向跨境平台及独立站团队，帮助理解不同语言的商品咨询与客户需求。" },
+      { title: "外贸 B2B 企业", body: "面向国际销售团队，围绕需求、报价和长期客户关系开展跨语言商务沟通。" },
+      { title: "海外社媒与 DTC 品牌", body: "面向海外社媒运营及直面消费者的品牌团队，通过跨语言沟通建立客户关系。" },
+    ] },
   },
 } satisfies Record<Locale, Dictionary>;

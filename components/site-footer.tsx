@@ -21,17 +21,18 @@ export function SiteFooter() {
           <h2 className="text-sm font-semibold text-slate-900">{t.footer.product}</h2>
           <ul className="mt-4 space-y-2 text-sm text-slate-600">
             <li>
-              <Link href="/#features" className="hover:text-slate-900">
+              <Link href="/features" className="hover:text-slate-900">
                 {t.nav.features}
               </Link>
             </li>
+
             <li>
-              <Link href="/#pricing" className="hover:text-slate-900">
+              <Link href="/pricing" className="hover:text-slate-900">
                 {t.nav.pricing}
               </Link>
             </li>
             <li>
-              <Link href="/#download" className="hover:text-slate-900">
+              <Link href="/download" className="hover:text-slate-900">
                 {t.nav.download}
               </Link>
             </li>
@@ -40,8 +41,11 @@ export function SiteFooter() {
         <div>
           <h2 className="text-sm font-semibold text-slate-900">{t.footer.company}</h2>
           <ul className="mt-4 space-y-2 text-sm text-slate-600">
+            <li><Link href="/referral">{t.nav.referral}</Link></li>
+            <li><Link href="/help">{t.nav.help}</Link></li>
+            <li><Link href="/blog">{t.nav.blog}</Link></li>
             <li>
-              <Link href="/#contact" className="hover:text-slate-900">
+              <Link href="/contact" className="hover:text-slate-900">
                 {t.footer.contact}
               </Link>
             </li>

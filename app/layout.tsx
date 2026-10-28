@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Sedavel — One Workspace. Every Conversation.",
   description:
-    "Sedavel is an SCRM customer communication tool for cross-border e-commerce sellers and foreign-trade companies.",
+    "Sedavel is a multilingual communication and customer management platform for cross-border e-commerce, international trade and global teams.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

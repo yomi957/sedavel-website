@@ -12,6 +12,7 @@ export function HomePage() {
     <main>
       <Hero />
       <Features />
+      <Solutions />
       <Benefits />
       <Pricing />
       <Faq />
@@ -26,13 +27,13 @@ function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-slate-50">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.16),transparent_42%),radial-gradient(circle_at_left,rgba(37,99,235,0.12),transparent_36%)]" />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:py-28">
-        <div className="animate-fade-up">
-          <p className="text-sm font-semibold tracking-wide text-blue-700">
+
+      <div className="relative mx-auto grid grid-cols-1 max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:py-28">
+        <div className="min-w-0 animate-fade-up">
+          <p className="text-sm font-semibold tracking-wide text-emerald-700">
             {t.hero.eyebrow}
           </p>
-          <h1 className="mt-4 max-w-xl text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+          <h1 className="mt-4 max-w-xl text-4xl font-semibold leading-[1.08] tracking-[-0.045em] text-slate-950 sm:text-5xl lg:text-6xl">
             {t.hero.title}
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">
@@ -41,7 +42,7 @@ function Hero() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
               href={PLACEHOLDER_SIGNUP}
-              className="inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:-translate-y-0.5 hover:bg-blue-700"
+              className="inline-flex items-center justify-center rounded-full bg-emerald-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-800"
               title={t.hero.ctaNote}
             >
               {t.hero.cta}
@@ -56,53 +57,27 @@ function Hero() {
           <p className="mt-3 text-xs text-slate-500">{t.hero.ctaNote}</p>
         </div>
 
-        <div className="animate-fade-up animation-delay-150">
-          <ConceptualWorkspace label={t.conceptual} />
+        <div className="min-w-0 animate-fade-up animation-delay-150">
+          <ProductPlaceholder />
         </div>
       </div>
     </section>
   );
 }
 
-function ConceptualWorkspace({ label }: { label: string }) {
+function ProductPlaceholder() {
+  const { t } = useLanguage();
   return (
-    <div className="rounded-3xl border border-white/70 bg-white/80 p-5 shadow-xl shadow-blue-900/5 ring-1 ring-blue-100 backdrop-blur">
-      <div className="rounded-2xl bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-5">
-        <div className="mb-4 flex gap-2">
-          {["Account A", "Account B", "Account C"].map((account, index) => (
-            <span
-              key={account}
-              className={`rounded-full px-3 py-1 text-xs font-medium ${
-                index === 0
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-slate-600 ring-1 ring-slate-200"
-              }`}
-            >
-              {account}
-            </span>
-          ))}
-        </div>
-        <div className="space-y-3">
-          <div className="max-w-[85%] rounded-2xl rounded-tl-md bg-white px-4 py-3 text-sm text-slate-700 shadow-sm ring-1 ring-slate-100">
-            Incoming message
-            <span className="mt-1 block text-xs text-blue-700">
-              Translated in real time
-            </span>
-          </div>
-          <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-blue-600 px-4 py-3 text-sm text-white shadow-sm">
-            Reply from one workspace
-          </div>
-          <div className="inline-flex rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">
-            AI Quick Replies · Coming Soon
-          </div>
-        </div>
-      </div>
-      <p className="mt-3 text-center text-xs text-slate-500">{label}</p>
+    <div className="product-placeholder flex min-h-80 flex-col items-center justify-center rounded-3xl border border-emerald-200 bg-emerald-50/50 px-6 py-12 text-center sm:min-h-96">
+      <span className="mb-8 text-[10px] font-semibold tracking-[0.18em] text-emerald-800">{t.preview.label}</span>
+      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-white text-emerald-700 shadow-sm ring-1 ring-emerald-100"><FeatureIcon index={2} /></div>
+      <p className="text-xl font-semibold tracking-tight text-slate-900">{t.preview.title}</p>
+      <p className="mt-3 max-w-xs text-sm leading-6 text-slate-600">{t.preview.note}</p>
     </div>
   );
 }
 
-function Features() {
+export function Features() {
   const { t } = useLanguage();
 
   return (
@@ -113,26 +88,30 @@ function Features() {
           title={t.features.title}
           subtitle={t.features.subtitle}
         />
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
           {t.features.items.map((item, index) => (
             <article
               key={item.title}
-              className="group rounded-3xl border border-slate-200 bg-slate-50/70 p-6 transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-lg hover:shadow-blue-900/5"
+              className="group min-w-0 rounded-3xl border border-slate-200 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-900/5 sm:p-8"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-500 text-white shadow-sm">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-800 shadow-sm">
                 <FeatureIcon index={index} />
               </div>
-              <div className="mt-5 flex items-center gap-2">
+              <div className="mt-5 flex flex-wrap items-center gap-2">
                 <h3 className="text-lg font-semibold text-slate-950">
                   {item.title}
                 </h3>
                 {"badge" in item && item.badge ? (
-                  <span className="rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-indigo-700">
+                  <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-emerald-700">
                     {item.badge}
                   </span>
                 ) : null}
               </div>
               <p className="mt-3 text-sm leading-6 text-slate-600">{item.body}</p>
+              <div className="mt-7 flex min-h-32 items-center gap-4 rounded-2xl border border-dashed border-emerald-200 bg-emerald-50/50 p-5 text-emerald-800">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white" aria-hidden="true"><FeatureIcon index={index} /></span>
+                <span className="text-xs leading-5">{t.preview.featureNote}</span>
+              </div>
             </article>
           ))}
         </div>
@@ -157,9 +136,29 @@ function FeatureIcon({ index }: { index: number }) {
     );
   }
   return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path strokeLinecap="round" d="M12 5v2M8 8h8M7 12h10M9 16h6M12 19v-2" />
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <path strokeLinecap="round" d={index === 2 ? "M4 5h12v9H9l-5 4V5Zm14 4h3v12l-5-4h-3" : "M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM5 21v-3a7 7 0 0 1 14 0v3M9 17h6"} />
     </svg>
+  );
+}
+
+export function Solutions() {
+  const { t } = useLanguage();
+  return (
+    <section id="solutions" className="scroll-mt-24 border-y border-slate-200/70 bg-slate-50 py-20 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeading eyebrow={t.solutions.eyebrow} title={t.solutions.title} subtitle={t.solutions.subtitle} />
+        <div className="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-3">
+          {t.solutions.items.map((item, index) => (
+            <article key={item.title} className="min-w-0 rounded-3xl border border-slate-200 bg-white p-7">
+              <span className="text-xs font-semibold tracking-widest text-emerald-700">0{index + 1} / SEDAVEL</span>
+              <h3 className="mt-8 text-xl font-semibold tracking-tight text-slate-950">{item.title}</h3>
+              <p className="mt-4 text-sm leading-7 text-slate-600">{item.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -170,13 +169,13 @@ function Benefits() {
     <section className="bg-slate-50 py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading eyebrow={t.benefits.eyebrow} title={t.benefits.title} />
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
           {t.benefits.items.map((item, index) => (
             <article
               key={item.title}
               className="rounded-3xl bg-white p-7 ring-1 ring-slate-200"
             >
-              <p className="text-sm font-semibold text-blue-700">0{index + 1}</p>
+              <p className="text-sm font-semibold text-emerald-700">0{index + 1}</p>
               <h3 className="mt-3 text-xl font-semibold text-slate-950">
                 {item.title}
               </h3>
@@ -189,7 +188,7 @@ function Benefits() {
   );
 }
 
-function Pricing() {
+export function Pricing() {
   const { t } = useLanguage();
 
   return (
@@ -200,7 +199,7 @@ function Pricing() {
           title={t.pricing.title}
           subtitle={t.pricing.subtitle}
         />
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-3">
           {t.pricing.plans.map((plan, index) => {
             const featured = index === 1;
             return (
@@ -208,12 +207,12 @@ function Pricing() {
                 key={plan.name}
                 className={`rounded-3xl p-7 transition hover:-translate-y-1 ${
                   featured
-                    ? "bg-slate-950 text-white shadow-xl shadow-blue-900/20"
+                    ? "bg-emerald-950 text-white shadow-xl shadow-emerald-900/20"
                     : "border border-slate-200 bg-white"
                 }`}
               >
                 {featured ? (
-                  <p className="mb-4 inline-flex rounded-full bg-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-100">
+                  <p className="mb-4 inline-flex rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-semibold text-emerald-100">
                     {t.pricing.featured}
                   </p>
                 ) : null}
@@ -229,13 +228,13 @@ function Pricing() {
                     {t.pricing.billed}
                   </span>
                 </p>
-                <p className={`mt-2 text-sm font-medium ${featured ? "text-blue-200" : "text-blue-700"}`}>
+                <p className={`mt-2 text-sm font-medium ${featured ? "text-emerald-200" : "text-emerald-700"}`}>
                   {plan.quota} {t.pricing.characters}
                 </p>
                 <ul className={`mt-6 space-y-2 text-sm ${featured ? "text-slate-300" : "text-slate-600"}`}>
                   {plan.points.map((point) => (
                     <li key={point} className="flex gap-2">
-                      <span className={featured ? "text-blue-300" : "text-blue-600"}>✓</span>
+                      <span className={featured ? "text-emerald-300" : "text-emerald-600"}>✓</span>
                       {point}
                     </li>
                   ))}
@@ -245,8 +244,8 @@ function Pricing() {
                   title={t.pricing.placeholderNote}
                   className={`mt-8 inline-flex w-full items-center justify-center rounded-full px-4 py-3 text-sm font-semibold transition ${
                     featured
-                      ? "bg-blue-500 text-white hover:bg-blue-400"
-                      : "bg-blue-600 text-white hover:bg-blue-700"
+                      ? "bg-emerald-700 text-white hover:bg-emerald-800"
+                      : "bg-emerald-700 text-white hover:bg-emerald-800"
                   }`}
                 >
                   {t.pricing.cta}
@@ -304,24 +303,24 @@ function Faq() {
   );
 }
 
-function Cta() {
+export function Cta() {
   const { t } = useLanguage();
 
   return (
     <section id="download" className="scroll-mt-24 py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-500 px-6 py-14 text-center text-white shadow-xl sm:px-12">
+        <div className="overflow-hidden rounded-3xl bg-emerald-900 px-6 py-14 text-center text-white shadow-xl sm:px-12">
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
             {t.cta.title}
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-blue-50 sm:text-base">
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-emerald-50 sm:text-base">
             {t.cta.subtitle}
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a
               href={PLACEHOLDER_SIGNUP}
               title={t.cta.signupNote}
-              className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-blue-700 transition hover:-translate-y-0.5"
+              className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-emerald-700 transition hover:-translate-y-0.5"
             >
               {t.cta.signup}
             </a>
@@ -333,7 +332,7 @@ function Cta() {
               {t.cta.download}
             </a>
           </div>
-          <p className="mt-4 text-xs text-blue-100">
+          <p className="mt-4 text-xs text-emerald-100">
             {t.cta.signupNote} · {t.cta.downloadNote}
           </p>
         </div>
@@ -342,14 +341,14 @@ function Cta() {
   );
 }
 
-function Contact() {
+export function Contact() {
   const { t } = useLanguage();
 
   return (
     <section id="contact" className="scroll-mt-24 bg-white pb-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="rounded-3xl border border-slate-200 bg-slate-50 px-6 py-12 sm:px-10">
-          <p className="text-sm font-semibold text-blue-700">{t.contact.eyebrow}</p>
+          <p className="text-sm font-semibold text-emerald-700">{t.contact.eyebrow}</p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950">
             {t.contact.title}
           </h2>
@@ -359,7 +358,7 @@ function Contact() {
           <a
             href="#placeholder-contact"
             title={t.contact.note}
-            className="mt-6 inline-flex rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+            className="mt-6 inline-flex rounded-full bg-emerald-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
           >
             {t.contact.action}
           </a>
@@ -381,7 +380,7 @@ function SectionHeading({
 }) {
   return (
     <div className="max-w-2xl">
-      <p className="text-sm font-semibold tracking-wide text-blue-700">{eyebrow}</p>
+      <p className="text-sm font-semibold tracking-wide text-emerald-700">{eyebrow}</p>
       <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
         {title}
       </h2>
