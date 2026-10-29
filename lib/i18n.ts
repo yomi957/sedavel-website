@@ -23,6 +23,7 @@ export type Dictionary = {
   brand: string;
   tagline: string;
   nav: {
+    home: string;
     features: string;
     solutions: string;
     referral: string;
@@ -116,6 +117,7 @@ export const dictionaries = {
     brand: "Sedavel",
     tagline: "SCRM for cross-border teams",
     nav: {
+      home: "Home",
       features: "Features",
       solutions: "Solutions",
       referral: "Referral Center",
@@ -276,6 +278,7 @@ export const dictionaries = {
     brand: "Sedavel",
     tagline: "面向跨境团队的 SCRM",
     nav: {
+      home: "首页",
       features: "功能",
       solutions: "解决方案",
       referral: "邀请中心",

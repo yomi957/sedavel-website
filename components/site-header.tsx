@@ -5,9 +5,10 @@ import { usePathname } from "next/navigation";
 import { Suspense, useState } from "react";
 import { Logo } from "@/components/logo";
 import { useLanguage } from "@/components/language-provider";
-import { PLACEHOLDER_SIGNUP, type Locale } from "@/lib/i18n";
+import type { Locale } from "@/lib/i18n";
 
 const navItems = [
+  { href: "/", key: "home" as const },
   { href: "/features", key: "features" as const },
   { href: "/pricing", key: "pricing" as const },
   { href: "/download", key: "download" as const },
@@ -25,7 +26,7 @@ function HeaderContent() {
   const { t, locale, setLocale } = useLanguage();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const active = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const active = (href: string) => pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
 
   return (
     <header onKeyDown={(event) => { if (event.key === "Escape") setOpen(false); }} className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-xl">
@@ -34,7 +35,7 @@ function HeaderContent() {
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-1 text-sm font-medium text-slate-600 xl:flex">
+        <nav className="hidden items-center gap-0.5 text-[13px] font-medium text-slate-600 xl:flex">
           {navItems.map((item) => (
             <Link
               key={item.key}
@@ -50,13 +51,13 @@ function HeaderContent() {
 
         <div className="hidden items-center gap-3 xl:flex">
           <LanguageToggle locale={locale} setLocale={setLocale} />
-          <a
-            href={PLACEHOLDER_SIGNUP}
+          <Link
+            href="/register"
+            onClick={() => setOpen(false)}
             className="rounded-full bg-emerald-700 px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-800"
-            title={t.hero.ctaNote}
           >
             {t.nav.getStarted}
-          </a>
+          </Link>
         </div>
 
         <button
@@ -95,13 +96,13 @@ function HeaderContent() {
           </nav>
           <div className="mt-4 flex items-center justify-between gap-3">
             <LanguageToggle locale={locale} setLocale={setLocale} />
-            <a
-              href={PLACEHOLDER_SIGNUP}
+            <Link
+              href="/register"
+              onClick={() => setOpen(false)}
               className="rounded-full bg-emerald-700 px-4 py-2 text-sm font-semibold text-white"
-              title={t.hero.ctaNote}
             >
               {t.nav.getStarted}
-            </a>
+            </Link>
           </div>
         </div>
       ) : null}
