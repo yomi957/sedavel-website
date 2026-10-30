@@ -1,5 +1,12 @@
 "use client";
 
+import { keyedPath, useCmsEdit } from "./cms-edit-context";
+import { GlassButton, GlassCard } from "@/components/glass-ui";
+import { CmsImage } from "@/components/cms-image";
+import { CmsIconView } from "@/components/page-modules";
+import { localize } from "@/lib/cms-content";
+import { resolvePricingCopy, type PricingCopy } from "@/lib/pricing-cms";
+import pricingStyles from "./pricing-page.module.css";
 import { useState } from "react";
 import { useLanguage } from "@/components/language-provider";
 import {
@@ -188,50 +195,51 @@ function Benefits() {
   );
 }
 
-export function Pricing() {
-  const { t } = useLanguage();
+export function Pricing({ content, preview = false }: { content?: PricingCopy; preview?: boolean } = {}) {
+  const { t, locale } = useLanguage();
+  const copy = resolvePricingCopy(content, locale, t.pricing);
+  const edit = useCmsEdit(), field = (path?: string) => preview ? edit(path) : undefined;
 
   return (
     <section id="pricing" className="scroll-mt-24 bg-white py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
-          eyebrow={t.pricing.eyebrow}
-          title={t.pricing.title}
-          subtitle={t.pricing.subtitle}
+          editAttributes={{ eyebrow: content?.eyebrow[locale] ? field(`pricing.eyebrow.${locale}`) : undefined, title: content?.title[locale] ? field(`pricing.title.${locale}`) : undefined, subtitle: content?.introduction[locale] ? field(`pricing.introduction.${locale}`) : undefined }}
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          subtitle={copy.subtitle}
         />
+        {!!copy.benefits.length && <ul data-sanity={field(locale === "zh" ? "pricing.benefitsZh" : "pricing.benefitsEn")} className="mt-6 flex flex-wrap gap-x-8 gap-y-3 text-sm text-emerald-800">{copy.benefits.map((b, i) => <li key={i}>✓ {b}</li>)}</ul>}
         <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-3">
-          {t.pricing.plans.map((plan, index) => {
-            const featured = index === 1;
+          {copy.plans.map((plan) => {
+            const featured = plan.featured, source = content?.cards[plan.key], base = keyedPath("pricing.cards", source?.sourceKey);
+            const cardField = (name: string) => base ? field(`${base}.${name}`) : undefined;
             return (
-              <article
-                key={plan.name}
-                className={`rounded-3xl p-7 transition hover:-translate-y-1 ${
-                  featured
-                    ? "bg-emerald-950 text-white shadow-xl shadow-emerald-900/20"
-                    : "border border-slate-200 bg-white"
-                }`}
-              >
+              <article key={plan.key} data-plan={plan.key} data-recommended={featured} className="min-w-0">
+                <GlassCard className={`${pricingStyles.card} ${featured ? pricingStyles.featured : ""} h-full rounded-3xl p-7`}>
+                {plan.icon && <CmsIconView icon={plan.icon} editPath={base ? `${base}.icon` : undefined}/>}
                 {featured ? (
-                  <p className="mb-4 inline-flex rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-semibold text-emerald-100">
-                    {t.pricing.featured}
+                  <p data-sanity={content?.featuredLabel[locale] ? field(`pricing.featuredLabel.${locale}`) : undefined} className="mb-4 inline-flex rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-semibold text-emerald-100">
+                    {copy.featured}
                   </p>
                 ) : null}
                 <h3 className="text-lg font-semibold">{plan.name}</h3>
-                <p className={`mt-2 text-sm ${featured ? "text-slate-300" : "text-slate-600"}`}>
+                <p data-sanity={source?.description[locale] ? cardField(`description.${locale}`) : undefined} className={`mt-2 text-sm ${featured ? "text-slate-300" : "text-slate-600"}`}>
                   {plan.description}
                 </p>
-                <p className="mt-6 flex items-end gap-1">
+                {plan.image && <figure data-sanity={cardField("image")} className="mt-5"><CmsImage key={plan.image.url} image={plan.image} style={{ maxHeight: 160, objectFit: "contain" }} />{localize(plan.image.caption, locale) && <figcaption data-sanity={cardField(locale === "zh" ? "image.captionZh" : "image.captionEn")} className={`mt-2 text-xs ${featured ? "text-slate-200" : "text-slate-600"}`}>{localize(plan.image.caption, locale)}</figcaption>}</figure>}
+                <p className="mt-6 flex flex-wrap items-end gap-1">
                   <span className="text-4xl font-semibold tracking-tight">
                     {plan.price}
                   </span>
-                  <span className={`mb-1 text-sm ${featured ? "text-slate-400" : "text-slate-500"}`}>
-                    {t.pricing.billed}
+                  <span className={`mb-1 text-sm ${featured ? "text-slate-200" : "text-slate-500"}`}>
+                    {copy.billed}
                   </span>
                 </p>
                 <p className={`mt-2 text-sm font-medium ${featured ? "text-emerald-200" : "text-emerald-700"}`}>
-                  {plan.quota} {t.pricing.characters}
+                  {plan.quota} {copy.characters}
                 </p>
-                <ul className={`mt-6 space-y-2 text-sm ${featured ? "text-slate-300" : "text-slate-600"}`}>
+                <ul data-sanity={source?.[locale === "zh" ? "benefitsZh" : "benefitsEn"] ? cardField(locale === "zh" ? "benefitsZh" : "benefitsEn") : undefined} className={`mt-6 space-y-2 text-sm ${featured ? "text-slate-300" : "text-slate-600"}`}>
                   {plan.points.map((point) => (
                     <li key={point} className="flex gap-2">
                       <span className={featured ? "text-emerald-300" : "text-emerald-600"}>✓</span>
@@ -239,20 +247,11 @@ export function Pricing() {
                     </li>
                   ))}
                 </ul>
-                <a
-                  href={PLACEHOLDER_SIGNUP}
-                  title={t.pricing.placeholderNote}
-                  className={`mt-8 inline-flex w-full items-center justify-center rounded-full px-4 py-3 text-sm font-semibold transition ${
-                    featured
-                      ? "bg-emerald-700 text-white hover:bg-emerald-800"
-                      : "bg-emerald-700 text-white hover:bg-emerald-800"
-                  }`}
-                >
-                  {t.pricing.cta}
-                </a>
-                <p className={`mt-3 text-center text-xs ${featured ? "text-slate-400" : "text-slate-500"}`}>
-                  {t.pricing.placeholderNote}
+                <GlassButton data-sanity={source?.buttonText[locale] ? cardField(`buttonText.${locale}`) : content?.buttonText[locale] ? field(`pricing.buttonText.${locale}`) : undefined} href="/register" className="mt-8 w-full">{plan.buttonText}</GlassButton>
+                <p className={`mt-3 text-center text-xs ${featured ? "text-slate-200" : "text-slate-500"}`}>
+                  {copy.placeholderNote}
                 </p>
+                </GlassCard>
               </article>
             );
           })}
@@ -370,22 +369,24 @@ export function Contact() {
 }
 
 function SectionHeading({
+  editAttributes,
   eyebrow,
   title,
   subtitle,
 }: {
+  editAttributes?: { eyebrow?: string; title?: string; subtitle?: string };
   eyebrow: string;
   title: string;
   subtitle?: string;
 }) {
   return (
     <div className="max-w-2xl">
-      <p className="text-sm font-semibold tracking-wide text-emerald-700">{eyebrow}</p>
-      <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+      <p data-sanity={editAttributes?.eyebrow} className="text-sm font-semibold tracking-wide text-emerald-700">{eyebrow}</p>
+      <h2 data-sanity={editAttributes?.title} className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
         {title}
       </h2>
       {subtitle ? (
-        <p className="mt-4 text-base leading-7 text-slate-600">{subtitle}</p>
+        <p data-sanity={editAttributes?.subtitle} className="mt-4 text-base leading-7 text-slate-600">{subtitle}</p>
       ) : null}
     </div>
   );

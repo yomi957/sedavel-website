@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { dictionaries, type Dictionary, type Locale } from "@/lib/i18n";
@@ -14,18 +15,22 @@ type LanguageContextValue = {
   locale: Locale;
   t: Dictionary;
   setLocale: (locale: Locale) => void;
+  initializeLocale: (locale: Locale) => void;
 };
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const selected = useRef(false);
   const [locale, setLocaleState] = useState<Locale>("en");
+  const initializeLocale = useCallback((next: Locale) => { if (!selected.current) setLocaleState(next); }, []);
 
   useEffect(() => {
     document.documentElement.lang = locale === "zh" ? "zh-CN" : "en";
   }, [locale]);
 
   const setLocale = useCallback((next: Locale) => {
+    selected.current = true;
     setLocaleState(next);
   }, []);
 
@@ -34,8 +39,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       locale,
       t: dictionaries[locale],
       setLocale,
+      initializeLocale,
     }),
-    [locale, setLocale],
+    [locale, setLocale, initializeLocale],
   );
 
   return (

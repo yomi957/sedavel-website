@@ -1,0 +1,136 @@
+/* Keep the sticky shell unfiltered: the bar and dropdown are sibling glass planes. */
+.header[data-glass="navigation"] {
+  --glass-bg: linear-gradient(125deg, #ffffffa3, #eaf8ee85 52%, #d5f2de66);
+  --glass-solid: #f0f7f2;
+  --glass-border: #187b3626;
+  --glass-highlight: #ffffffe6;
+  --glass-shadow: 0 12px 32px #003c1924, 0 2px 5px #003c1912;
+  --glass-blur: 24px;
+  --glass-saturation: 150%;
+  --glass-menu-bg: linear-gradient(145deg, #f5fbf7ed, #eaf8eedb);
+  --glass-control-bg: linear-gradient(145deg, #ffffff85, #eaf8ee4d);
+  position: sticky;
+  width: min(1360px, calc(100% - 48px));
+  margin: 16px auto;
+  top: 16px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.header[data-glass]::before { content: none; }
+.header.homeHeader { margin-bottom: -82px; }
+.bar, .mobileMenu {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-solid);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-highlight), inset 0 -1px 0 #187b3614;
+}
+.bar { border-radius: 999px; }
+.bar::before, .mobileMenu::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(175deg, #ffffff26, transparent 35%, transparent 75%, #ffffff0d);
+  box-shadow: inset 1px 0 0 #ffffff80, inset -1px 0 0 #ffffff66;
+}
+.mobileMenu {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  right: 0;
+  max-height: calc(100dvh - 120px);
+  border-radius: 26px;
+}
+.header .navItem {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: #183d28;
+  box-shadow: none;
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+/* Darker lower gradient preserves white text contrast even over a white page. */
+.header .navItem[aria-current="page"] {
+  background: linear-gradient(145deg, #10783df5, #147a3ee8);
+  color: #fff;
+  border-color: #ffffff66;
+  box-shadow: inset 0 1px 0 #ffffff80, inset 0 -1px 0 #003c1926, 0 3px 10px #00461c33;
+}
+.header :global([data-glass="toggle"]) {
+  background: #eaf4ed;
+  border-color: #ffffffa6;
+  box-shadow: inset 0 1px 0 #ffffffb3, 0 2px 8px #003c1912;
+}
+.header :global([data-glass="toggle"]) button {
+  background: transparent;
+  color: #1c422c;
+  transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+.header :global([data-glass="toggle"]) button[aria-pressed="true"] {
+  color: #fff;
+  background: linear-gradient(145deg, #187b36, #12652d);
+  box-shadow: inset 0 1px 0 #ffffff66, 0 2px 6px #00461c26;
+}
+.header :global(a[data-glass="button"]) {
+  background: linear-gradient(145deg, #187b36, #12652d);
+  color: #fff;
+  border-color: #ffffff70;
+  box-shadow: inset 0 1px 0 #ffffff80, inset 0 -1px 0 #003c1940, 0 4px 12px #00461c33;
+}
+.header :global(a[data-glass="button"])::before {
+  background: linear-gradient(170deg, #ffffff29, transparent 48%, #ffffff08);
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .bar { background: var(--glass-bg); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation)); backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation)); }
+  .mobileMenu { background: var(--glass-menu-bg); -webkit-backdrop-filter: blur(16px) saturate(140%); backdrop-filter: blur(16px) saturate(140%); }
+  .header :global([data-glass="toggle"]) { background: var(--glass-control-bg); }
+  .header :global(a[data-glass="button"]) { background: linear-gradient(145deg, #187b36f5, #12652deb); }
+}
+@media (hover: hover) and (pointer: fine) {
+  .header .navItem:not([aria-current="page"]):hover {
+    background: #ffffff85;
+    border-color: #ffffffa6;
+    box-shadow: inset 0 1px 0 #ffffffe6, 0 2px 7px #003c1914;
+  }
+  .header .navItem[aria-current="page"]:hover { color: #fff; box-shadow: inset 0 1px 0 #ffffffb3, 0 4px 12px #00461c40; }
+  .header :global([data-glass="toggle"]) button:not([aria-pressed="true"]):hover { background: #ffffff94; }
+  .header :global(a[data-glass="button"]):hover { color: #fff; background: linear-gradient(145deg, #1b8740, #146f32); border-color: #ffffffb3; box-shadow: inset 0 1px 0 #ffffffa6, 0 6px 16px #00461c40; }
+}
+.header .navItem:active, .header :global([data-glass="toggle"]) button:active { transform: scale(.97); }
+.header .navItem:focus-visible, .header :global([data-glass="toggle"]) button:focus-visible, .header :global(a[data-glass="button"]):focus-visible {
+  outline: 3px solid #104e28;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 2px #fff;
+}
+@media (max-width: 767px) {
+  .header[data-glass="navigation"] { --glass-blur: 16px; --glass-saturation: 140%; }
+}
+@media (max-width: 639px) {
+  .header[data-glass="navigation"] { width: calc(100% - 24px); top: 12px; margin-top: 12px; margin-bottom: 12px; }
+  .header.homeHeader { margin-bottom: -78px; }
+}
+@media (min-width: 1280px) { .header .menuButton { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .header .navItem, .header :global([data-glass="toggle"]) button { transition: none; }
+  .header .navItem:active, .header :global([data-glass="toggle"]) button:active { transform: none; }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .bar, .mobileMenu { background: var(--glass-solid); border-color: #688774; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .bar::before, .mobileMenu::before { display: none; }
+  .header .navItem[aria-current="page"], .header :global([data-glass="toggle"]) button[aria-pressed="true"], .header :global(a[data-glass="button"]) { background: #12652d; color: #fff; }
+  .header :global([data-glass="toggle"]) { background: #eaf4ed; border-color: #688774; }
+}
+@media (forced-colors: active) {
+  .bar, .mobileMenu { background: Canvas; border-color: ButtonText; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .bar::before, .mobileMenu::before { display: none; }
+  .header .navItem, .header :global([data-glass="toggle"]), .header :global([data-glass="toggle"]) button, .header :global(a[data-glass="button"]) { background: Canvas; color: CanvasText; box-shadow: none; }
+  .header .navItem[aria-current="page"], .header :global([data-glass="toggle"]) button[aria-pressed="true"] { background: Highlight; color: HighlightText; border-color: Highlight; outline: 1px solid Highlight; }
+  .header .navItem:focus-visible, .header :global([data-glass="toggle"]) button:focus-visible, .header :global(a[data-glass="button"]):focus-visible { outline: 3px solid Highlight; }
+}

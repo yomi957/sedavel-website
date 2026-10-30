@@ -1,0 +1,104 @@
+/* Web materials, not native optical refraction. Scoped modules never enter Studio. */
+.surface, .control, .toggle {
+  --glass-solid: #f7fbf8;
+  --glass-fill: linear-gradient(145deg, #fffffff0, #edf8f0d9);
+  --glass-ink: #14251a;
+  position: relative;
+  isolation: isolate;
+  border: 1px solid #c6decf;
+  background: var(--glass-solid);
+  color: var(--glass-ink);
+  box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 #187b3610, 0 8px 24px -16px #143d2a4d;
+}
+.surface::before, .control::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(155deg, #ffffff26, transparent 38%, transparent 75%, #ffffff10);
+}
+.clear { --glass-solid: #f5fbf7; --glass-fill: linear-gradient(135deg, #ffffffd9, #eaf8eead); }
+.regular { --glass-solid: #f7fbf8; --glass-fill: linear-gradient(135deg, #fffffff0, #edf8f0db); }
+.tinted { --glass-solid: #e2f4e7; --glass-fill: linear-gradient(135deg, #eaf8eee8, #a5e8b6c9); }
+.surface { border-radius: 24px; }
+.control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 11px 21px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+.primary {
+  --glass-solid: #187b36;
+  --glass-fill: linear-gradient(145deg, #187b36f5, #12652df0);
+  --glass-ink: #fff;
+  border-color: #145c2b;
+  box-shadow: inset 0 1px 0 #c8f8d673, inset 0 -1px 0 #073d3040, 0 8px 20px -12px #063d2c80;
+}
+.secondary { --glass-fill: linear-gradient(145deg, #ffffffe8, #eaf8eec9); --glass-ink: #155b2a; }
+.neutral { --glass-fill: linear-gradient(145deg, #ffffffef, #f0f7f3dc); --glass-ink: #203d2c; }
+.iconButton { width: 44px; padding: 0; flex-shrink: 0; }
+.navigation { border-radius: 999px; box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 #187b3614, 0 16px 40px -25px #143d2a66; }
+.navigation[data-open="true"] { border-radius: 30px; }
+.navigation .control { -webkit-backdrop-filter: none; backdrop-filter: none; }
+.navigation nav a { border-radius: 999px; transition: background-color 180ms ease, box-shadow 180ms ease; }
+.navigation nav a[aria-current="page"] { background: #d9f1e2; color: #124d29; box-shadow: inset 0 1px 0 #fff9, 0 1px 3px #187b3610; }
+.navigation nav a:focus-visible, .control:focus-visible, .toggleOption:focus-visible, .interactive:focus-visible {
+  outline: 3px solid #12652d;
+  outline-offset: 4px;
+  box-shadow: 0 0 0 3px #fff;
+}
+.card { border-radius: 25px; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.interactive { cursor: pointer; transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease; }
+.toggle { display: inline-flex; flex-shrink: 0; gap: 2px; padding: 3px; border-radius: 999px; box-shadow: inset 0 1px 0 #fff; }
+.toggleOption { min-width: 44px; min-height: 44px; padding: 6px 9px; border-radius: 999px; color: #385844; font-size: 12px; font-weight: 600; cursor: pointer; transition: background-color 180ms ease, box-shadow 180ms ease; }
+.toggleOption[aria-pressed="true"] { background: #fff; color: #155b2a; box-shadow: inset 0 0 0 1px #d2e8d9, 0 2px 6px #143d2a12; }
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .surface, .control, .toggle { background: var(--glass-fill); }
+  .surface { -webkit-backdrop-filter: blur(18px) saturate(125%); backdrop-filter: blur(18px) saturate(125%); }
+  .control { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .card { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .navigation .control { -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .control:not(:disabled):hover { transform: translateY(-1px); border-color: #7cbc8f; box-shadow: inset 0 1px 0 #ffffff9c, 0 10px 24px -14px #143d2a80; }
+  .interactive:hover { transform: translateY(-3px); border-color: #9ad4ac; box-shadow: inset 0 1px 0 #fff, 0 18px 35px -25px #143d2a66; }
+  .navigation nav a:hover, .toggleOption:hover { background-color: #e4f5ea; color: #155b2a; }
+}
+.control:not(:disabled):active, .interactive:active { transform: translateY(0) scale(.98); }
+.control:disabled { --glass-solid: #e5ece7; --glass-fill: #e5ece7; --glass-ink: #52665a; cursor: not-allowed; box-shadow: inset 0 1px 0 #fff9; border-color: #c4d2c8; -webkit-backdrop-filter: none; backdrop-filter: none; }
+@media (max-width: 767px) {
+  .surface { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .card, .control { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .navigation { border-radius: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .control, .interactive, .toggleOption, .navigation nav a { transition: none; }
+  .control:not(:disabled):hover, .control:not(:disabled):active, .interactive:hover, .interactive:active { transform: none; }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .surface, .control, .toggle { background: var(--glass-solid); -webkit-backdrop-filter: none; backdrop-filter: none; border-color: #537b60; }
+  .surface::before, .control::before { display: none; }
+  .navigation nav a[aria-current="page"], .toggleOption[aria-pressed="true"] { outline: 1px solid #155b2a; }
+}
+@media (forced-colors: active) {
+  .surface, .control, .toggle { background: Canvas; color: CanvasText; border: 1px solid ButtonText; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .surface::before, .control::before { display: none; }
+  .navigation nav a[aria-current="page"], .toggleOption[aria-pressed="true"] { outline: 2px solid Highlight; }
+  .control:disabled { color: GrayText; border-color: GrayText; }
+}
+
+@media (forced-colors: active) {
+  .control:focus-visible, .interactive:focus-visible, .toggleOption:focus-visible, .navigation nav a:focus-visible { outline: 3px solid Highlight; box-shadow: none; }
+}

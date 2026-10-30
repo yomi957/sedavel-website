@@ -11,6 +11,7 @@ const eslintConfig = defineConfig([
     ".next/**",
     "out/**",
     "build/**",
+    "dist/**", // Generated standalone Studio bundle, not source code.
     "next-env.d.ts",
   ]),
 ]);

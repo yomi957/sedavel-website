@@ -5,7 +5,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Installation
 
-Use Node.js 20.9 or later and npm. Install the locked project dependencies:
+Use Node.js 22.12 or later and npm (Node 24 recommended). Install the locked project dependencies:
 
 ```bash
 npm ci
@@ -27,7 +27,7 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `app/(website)/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
@@ -46,6 +46,12 @@ The production build uses Webpack. Google Fonts are downloaded during the build,
 npm run lint
 npx tsc --noEmit
 ```
+
+## Sanity CMS
+
+Sanity Studio is embedded at `/studio` and uses Sanity's official editor login. It is isolated from the public website layout. The current frontend still uses its existing static content.
+
+Copy `.env.example` to `.env.local` and configure your existing project ID and dataset. Do not put tokens in public environment variables. See [CMS setup and editor access](docs/sanity-cms.md) for CORS, project membership, schema details and frontend integration steps.
 
 ## Learn More
 
