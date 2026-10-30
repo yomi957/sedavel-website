@@ -1,0 +1,11 @@
+.card[data-glass="card"] { overflow-wrap: anywhere; }
+.featured[data-glass="card"] {
+  --glass-solid: #073d2a;
+  --glass-fill: linear-gradient(145deg, #073d2af5, #0e5136f5);
+  --glass-ink: #fff;
+  border-color: #187b36;
+  box-shadow: inset 0 1px 0 #a5e8b652, 0 18px 36px -20px #06432f66;
+}
+.featured h3 { color: #fff; }
+@media (prefers-contrast: more) { .featured[data-glass="card"] { background: #073d2a; color: #fff; } }
+@media (forced-colors: active) { .featured[data-glass="card"], .featured h3 { background: Canvas; color: CanvasText; border-color: Highlight; box-shadow: none; } }

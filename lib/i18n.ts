@@ -1,3 +1,5 @@
+import { pricingCatalog, pricingBasePoints } from "./pricing-catalog";
+
 export type Locale = "en" | "zh";
 
 type FeatureItem = {
@@ -120,7 +122,7 @@ export const dictionaries = {
       home: "Home",
       features: "Features",
       solutions: "Solutions",
-      referral: "Referral Center",
+      referral: "Referral Rewards",
       help: "Help Center",
       blog: "Blog",
       pricing: "Pricing",
@@ -161,49 +163,15 @@ export const dictionaries = {
     },
     pricing: {
       eyebrow: "Pricing",
-      title: "Character quota plans",
+      title: "Character packs. No subscriptions.",
       subtitle:
-        "Sedavel usage is billed by character quota. Choose a monthly plan that matches your conversation volume.",
-      billed: "Billed monthly",
-      characters: "characters / month",
+        "Start free with 50,000 characters. All released features are available to registered users, with character packs available as needed.",
+      billed: "Character pack",
+      characters: "characters",
       cta: "Get Started Free",
-      placeholderNote: "Placeholder link — checkout is not live yet",
-      featured: "Most used",
-      plans: [
-        {
-          name: "Starter",
-          quota: "200,000",
-          price: "$19",
-          description: "For small teams starting with a focused set of accounts.",
-          points: [
-            "Multi-account workspace",
-            "Real-time translation",
-            "Email support",
-          ],
-        },
-        {
-          name: "Growth",
-          quota: "1,000,000",
-          price: "$59",
-          description: "For growing sellers handling daily multilingual conversations.",
-          points: [
-            "Everything in Starter",
-            "Higher character quota",
-            "Priority support",
-          ],
-        },
-        {
-          name: "Scale",
-          quota: "5,000,000",
-          price: "$149",
-          description: "For teams that need more quota across a larger account set.",
-          points: [
-            "Everything in Growth",
-            "Highest listed quota",
-            "Dedicated onboarding",
-          ],
-        },
-      ],
+      placeholderNote: "Registration preview · Online checkout is not connected",
+      featured: "Recommended",
+      plans: pricingCatalog.map(plan => ({ name: plan.name, quota: plan.quota, price: plan.price, description: plan.description.en, points: [...pricingBasePoints.en] })),
     },
     faq: {
       eyebrow: "FAQ",
@@ -281,7 +249,7 @@ export const dictionaries = {
       home: "首页",
       features: "功能",
       solutions: "解决方案",
-      referral: "邀请中心",
+      referral: "推广返现",
       help: "帮助中心",
       blog: "博客",
       pricing: "价格",
@@ -322,37 +290,15 @@ export const dictionaries = {
     },
     pricing: {
       eyebrow: "价格",
-      title: "字符额度套餐",
+      title: "字符额度包，无须订阅会员。",
       subtitle:
-        "Sedavel 按字符额度计费。请选择与沟通量匹配的月度套餐。",
-      billed: "按月计费",
-      characters: "字符 / 月",
+        "免费获得 50,000 字符体验。注册用户可使用全部已上线功能，无须购买会员，字符额度包按需购买。",
+      billed: "字符额度包",
+      characters: "字符",
       cta: "免费开始",
-      placeholderNote: "占位链接 — 结账流程尚未上线",
-      featured: "常用",
-      plans: [
-        {
-          name: "Starter",
-          quota: "200,000",
-          price: "$19",
-          description: "适合账号数量较少、正在起步的小团队。",
-          points: ["多账号工作区", "实时翻译", "邮件支持"],
-        },
-        {
-          name: "Growth",
-          quota: "1,000,000",
-          price: "$59",
-          description: "适合日常需要多语言沟通的成长型卖家。",
-          points: ["包含 Starter 全部能力", "更高字符额度", "优先支持"],
-        },
-        {
-          name: "Scale",
-          quota: "5,000,000",
-          price: "$149",
-          description: "适合账号更多、需要更大额度的团队。",
-          points: ["包含 Growth 全部能力", "当前最高额度", "专属开通协助"],
-        },
-      ],
+      placeholderNote: "注册预览入口 · 在线支付尚未接入",
+      featured: "推荐",
+      plans: pricingCatalog.map(plan => ({ name: plan.name, quota: plan.quota, price: plan.price, description: plan.description.zh, points: [...pricingBasePoints.zh] })),
     },
     faq: {
       eyebrow: "常见问题",

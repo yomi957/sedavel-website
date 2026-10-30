@@ -1,0 +1,24 @@
+"use client";
+import { keyedPath, useCmsEdit } from "./cms-edit-context";
+import { useLanguage } from "@/components/language-provider";
+import { GlassButton } from "@/components/glass-ui";
+import { CmsImage } from "@/components/cms-image";
+import { localize, type CmsAction, type CmsIcon } from "@/lib/cms-content";
+import type { PageModule } from "@/lib/page-cms";
+const paths = { translation: "M3 5h11M8 3v2M5 5c0 5 4 9 8 10M12 5c0 4-3 8-8 11M13 21l4-11 4 11M14.5 17h5", accounts: "M4 4h7v7H4zM14 4h6v7h-6zM4 14h7v6H4zM14 14h6v6h-6z", customers: "M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0M4 21v-2a8 8 0 0 1 16 0v2", sparkles: "m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z", check: "m5 12 4 4L19 6", globe: "M3 12h18M12 3c6 5 6 13 0 18M12 3c-6 5-6 13 0 18M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0" };
+export function CmsIconView({ icon, editPath }: { icon: CmsIcon; editPath?: string }) { const edit = useCmsEdit(); return <span data-sanity={edit(editPath)} className="mb-5 inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-emerald-50 text-emerald-800">{icon.image ? <CmsImage image={icon.image} decorative /> : <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d={paths[icon.name]}/></svg>}</span>; }
+function Action({ action, editPath }: { action?: CmsAction; editPath?: string }) { const { locale } = useLanguage(), edit = useCmsEdit(); return action ? <GlassButton data-sanity={action.label[locale] && editPath ? edit(`${editPath}.label.${locale}`) : undefined} href={action.href}>{localize(action.label, locale, locale === "zh" ? "了解更多" : "Learn More")}</GlassButton> : null; }
+export function PageModuleView({ module: m }: { module: PageModule }) {
+  const { locale } = useLanguage(), t = (v: Parameters<typeof localize>[0]) => localize(v, locale);
+  const edit = useCmsEdit(), base = keyedPath("modules", m.sourceKey);
+  const path = (field: string) => base ? `${base}.${field}` : undefined;
+  const field = (name: string) => edit(path(name));
+  const heading = <>{t(m.title) && <h2 data-sanity={field(`title.${locale}`)} className="text-3xl font-semibold tracking-tight text-[#14251A] sm:text-4xl">{t(m.title)}</h2>}{t(m.description) && <p data-sanity={field(`description.${locale}`)} className="mt-5 whitespace-pre-line text-base leading-8 text-[#647067]">{t(m.description)}</p>}</>;
+  return <section data-cms-module={m.type} className="mx-auto w-[calc(100%-40px)] max-w-6xl py-12 sm:w-[calc(100%-48px)] sm:py-16">
+    {m.type === "imageTextSection" ? <div className="grid min-w-0 items-center gap-10 md:grid-cols-2"><div className={m.imageSide === "left" ? "md:order-2" : ""}>{heading}<div className="mt-7"><Action action={m.action} editPath={path("action")}/></div></div><div className="min-w-0">{m.image ? <figure data-sanity={field("image")}><CmsImage image={m.image}/>{t(m.image.caption) && <figcaption data-sanity={field(locale === "zh" ? "image.captionZh" : "image.captionEn")} className="mt-3 text-sm text-slate-600">{t(m.image.caption)}</figcaption>}</figure> : <div data-sanity={field("image")} className="rounded-3xl border border-dashed border-emerald-200 bg-emerald-50 p-12 text-sm text-emerald-900">{locale === "zh" ? "等待正式产品图片" : "Official product image pending"}</div>}</div></div> : <>{heading}
+    {m.type === "cardGridSection" && <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{m.cards.map((c, i) => <article key={i} className="min-w-0 rounded-3xl border border-emerald-100 bg-white p-7"><CmsIconView icon={c.icon} editPath={path(`cards[${i}].icon`)}/><h3 data-sanity={field(`cards[${i}].title.${locale}`)} className="text-xl font-semibold text-[#14251A]">{t(c.title)}</h3><p data-sanity={field(`cards[${i}].description.${locale}`)} className="mt-4 whitespace-pre-line text-sm leading-7 text-[#647067]">{t(c.description)}</p>{c.action && <div className="mt-6"><Action action={c.action} editPath={path(`cards[${i}].action`)}/></div>}</article>)}</div>}
+    {m.type === "faqSection" && <div className="mt-8 space-y-3">{m.items.map((item, i) => t(item.question) && t(item.answer) ? <details key={i} className="rounded-2xl border border-emerald-100 bg-white p-5"><summary data-sanity={field(`items[${i}].question.${locale}`)} className="cursor-pointer font-semibold text-[#14251A]">{t(item.question)}</summary><p data-sanity={field(`items[${i}].answer.${locale}`)} className="mt-4 whitespace-pre-line leading-8 text-[#647067]">{t(item.answer)}</p></details> : null)}</div>}
+    {(m.type === "ctaBanner" || m.type === "pricingPreview") && <div className="mt-7 flex flex-wrap gap-3"><Action action={m.primaryAction || m.action} editPath={path(m.primaryAction ? "primaryAction" : "action")}/><Action action={m.secondaryAction} editPath={path("secondaryAction")}/></div>}
+    </>}
+  </section>;
+}

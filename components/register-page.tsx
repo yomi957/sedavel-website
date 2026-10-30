@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { PageHero } from "@/components/page-hero";
 import { Logo } from "@/components/logo";
 import { useLanguage } from "@/components/language-provider";
 
@@ -27,12 +28,12 @@ export function RegisterPage() {
   const { locale } = useLanguage();
   const t = content[locale];
   return (
-    <main className="bg-[#F7F9F8] px-5 py-12 text-[#647067] sm:py-20">
+    <main className="bg-[#F7F9F8] text-[#647067]">
+      <PageHero en={content.en.title} zh={content.zh.title} description={{ en: content.en.subtitle, zh: content.zh.subtitle }} />
+      <div className="px-5 py-12 sm:py-20">
       <div className="mx-auto grid max-w-5xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
         <div className="min-w-0">
           <Link href="/" className="inline-flex"><Logo /></Link>
-          <h1 className="mt-8 text-4xl font-semibold tracking-tight text-[#17231B] sm:text-5xl">{t.title}</h1>
-          <p className="mt-5 text-xl leading-8 text-[#187B36]">{t.subtitle}</p>
           <p className="mt-5 text-sm leading-7">{t.intro}</p>
           <ul className="mt-7 space-y-3 text-sm">{t.points.map(p => <li className="flex gap-3" key={p}><span aria-hidden="true" className="text-[#187B36]">✓</span>{p}</li>)}</ul>
           <Link className="mt-9 inline-flex min-h-11 items-center font-semibold text-[#187B36] hover:underline" href="/">{t.back}</Link>
@@ -49,6 +50,7 @@ export function RegisterPage() {
           </form>
           <div className="mt-6 flex flex-wrap items-center gap-2 text-xs"><p>{t.account}</p><button type="button" disabled className="min-h-11 cursor-not-allowed text-[#187B36]">{t.login}</button></div>
         </section>
+      </div>
       </div>
     </main>
   );
