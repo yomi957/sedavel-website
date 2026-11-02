@@ -33,6 +33,8 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ## Production build and local server
 
+Set `SITE_URL` to the confirmed HTTPS deployment origin before building or starting production. Missing production configuration fails explicitly. `SITE_INDEXING` defaults to `disabled`; enable only on the approved public deployment. See [SEO deployment checklist](docs/seo-deployment.md).
+
 ```bash
 npm run build
 npm run start
