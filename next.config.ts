@@ -8,9 +8,10 @@ const nextConfig: NextConfig = {
   experimental: {
     agentFeedback: true,
   },
-  // Keep SEO in the initial head for browsers and HTML-only consumers alike.
-  // This waits for metadata queries; page content can still stream afterwards.
-  htmlLimitedBots: /.*/,
+  // Keep production SEO/404 metadata blocking. Next 16.4.3's development
+  // static-shell validator misclassifies this app's uncached blocking metadata.
+  // Use the framework's default metadata streaming in development instead.
+  htmlLimitedBots: process.env.NODE_ENV === "production" ? /.*/ : undefined,
   cacheComponents: true,
   partialPrefetching: true,
   async headers() {
