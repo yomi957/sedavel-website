@@ -15,7 +15,7 @@
 
 页级 Title/Description 优先，未填使用全站默认值。Open Graph 标题/描述跟随页级；图片优先级为页级 CMS 图片（Blog 封面也是页级回退）、全站 CMS 分享图、现有正式 Sedavel Logo。Logo 使用已有构建资源，无需添加第三方图片或虚构产品图。请另提供经批准的横版分享图及双语 Alt。
 
-公开读取使用 published，Draft Mode 仍经官方验证。所有预览会话 noindex；后台和 API 不依赖 robots 进行认证。性能阶段的 head Metadata 配置、文章封面 eager/high、组件拆分和 Footer 对比度保留。
+公开读取使用 published，Draft Mode 仍经官方验证。所有预览会话 noindex；后台和 API 不依赖 robots 进行认证。生产环境的 head Metadata 配置、文章封面 eager/high、组件拆分和 Footer 对比度保留。开发环境使用 Next 默认流式 Metadata，避免 16.4.3 的静态壳校验 Invariant；参见 [开发预览兼容说明](draft-mode-static-shell.md)。
 
 ## 索引策略与 Sitemap
 
@@ -35,7 +35,7 @@ Sitemap 直接用 published perspective 查询 Blog，不调用 Draft Mode reade
 
 1. 检查生产站各页 raw HTML head 的 Title/Description/Canonical/OG；Canonical/OG 不能含 localhost、测试域名或预览站域名。
 2. GET /robots.txt 和 /sitemap.xml 应为 200；正式 Sitemap 只能有正式且实际可访问页面，不能包含测试文章、草稿、Studio、API。
-3. 验证缺失文章无 Canonical；缺失/非法文章应返回 HTTP 404。Metadata 和正文共用文章判定，依赖 next.config.ts 中阻塞 Metadata 的配置；更改流式策略后应重新验证普通 HTML 状态码。
+3. 验证缺失文章无 Canonical；缺失/非法文章应返回 HTTP 404。Metadata 和正文共用文章判定，依赖 next.config.ts 中生产环境阻塞 Metadata 的配置；更改流式策略后应重新验证普通 HTML 状态码。
 4. 上传正式分享图，检查公开图片 URL 可被抓取；CMS 图 Publish 后刷新生效，静态素材/配置变更需部署。
 5. Preview/测试环境必须配置托管平台身份验证或网络访问限制；noindex/robots 不是访问控制，代码不能代替托管权限配置。
 6. 核对 HTTPS、www/非 www 单一域名重定向、DNS、真实分享抓取及 Search Console；这些必须等待真实域名与部署后验收。
