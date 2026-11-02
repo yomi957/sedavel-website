@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { getHomePreview } from "@/sanity/lib/home-preview";
@@ -14,7 +15,7 @@ import { getPublishedHomePage } from "@/sanity/lib/home-page";
 export async function generateMetadata(): Promise<Metadata> {
   const [content, settings] = await Promise.all([getPublishedHomePage(), getPublishedSiteSettings()]);
   // The existing website uses English on the server. Language switching stays client-side.
-  return resolveHomeSeo("en", content, resolveDefaultSeo(settings, "en", homeDefaultSeo));
+  return pageMetadata("/", resolveHomeSeo("en", content, resolveDefaultSeo(settings, "en", homeDefaultSeo)));
 }
 
 async function PublishedHome() {

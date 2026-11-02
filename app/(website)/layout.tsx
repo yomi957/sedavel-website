@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { PreviewStatus } from "@/components/preview-status";
@@ -22,7 +23,9 @@ const geistMono = Geist_Mono({
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getPublishedSiteSettings();
-  return { ...resolveDefaultSeo(settings, "en", homeDefaultSeo), openGraph: defaultOpenGraph(settings, "en"), ...((await draftMode()).isEnabled ? { robots: { index: false, follow: false } } : {}) };
+  const meta = await pageMetadata("/", { ...resolveDefaultSeo(settings, "en", homeDefaultSeo), openGraph: defaultOpenGraph(settings, "en"), ...((await draftMode()).isEnabled ? { robots: { index: false, follow: false } } : {}) });
+  // Canonicals belong to concrete pages, never inherit the home URL into 404s.
+  return { ...meta, alternates: undefined };
 }
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

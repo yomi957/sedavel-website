@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import { getFeaturesPreview } from "@/sanity/lib/page-preview";
 import { PagePreviewRuntime } from "@/components/page-preview-runtime";
@@ -9,7 +10,7 @@ import { getPublishedWebsitePage, getPublishedSiteSettings } from "@/sanity/lib/
 import { featuresSeo, pageSeo } from "@/lib/page-cms";
 import { getPublishedFeatures } from "@/sanity/lib/features";
 
-export async function generateMetadata(): Promise<Metadata> { const [content, settings] = await Promise.all([getPublishedWebsitePage(), getPublishedSiteSettings()]); return pageSeo(content, "en", resolveDefaultSeo(settings, "en", featuresSeo)); }
+export async function generateMetadata(): Promise<Metadata> { const [content, settings] = await Promise.all([getPublishedWebsitePage(), getPublishedSiteSettings()]); return pageMetadata("/features", pageSeo(content, "en", resolveDefaultSeo(settings, "en", featuresSeo))); }
 async function PublishedFeatures() {
   const [records, content] = await Promise.all([getPublishedFeatures(), getPublishedWebsitePage()]);
   const preview = await getFeaturesPreview();
